@@ -7,10 +7,14 @@ from config import REWARDS
 from PIL import Image
 import os
 
+
+
 def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
     """Enhanced visualization with policy arrows and value heatmap"""
     grid = env.grid
     fig = plt.figure(figsize=(18, 7))
+
+
     
     # Add blue background if available
     bg_path = 'blue_bg.png'
@@ -25,6 +29,8 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
             fig.set_facecolor('#87CEEB')
     else:
         fig.set_facecolor('#87CEEB')
+
+
     
     # Add group title
     fig.suptitle('CSE440-AI Group:5', fontsize=16, fontweight='bold', y=0.98, color='darkblue')
@@ -32,6 +38,8 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
     # Main grid visualization
     ax1 = plt.subplot(1, 3, 1)
     ax = ax1
+
+
 
     # Create colored grid based on cell values
     colored_grid = np.zeros((env.size, env.size, 3))
@@ -52,6 +60,9 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
 
     im = ax.imshow(colored_grid)
 
+
+
+    
     # Labels on grid cells
     for i in range(env.size):
         for j in range(env.size):
@@ -65,6 +76,8 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
             elif val == REWARDS["gas"]:
                 ax.text(j, i, '☁️', ha='center', va='center', fontsize=10, fontweight='bold')
 
+
+    
     # Add legend
     legend_elements = [
         Patch(facecolor=[0, 1, 0], label=f'🎯 Goal - +{REWARDS["goal"]}'),
@@ -75,6 +88,8 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
     ]
     ax.legend(handles=legend_elements, loc='upper left', bbox_to_anchor=(1.05, 1), fontsize=9)
 
+
+    
     # Add policy arrows
     if policy is not None:
         arrow_labels = {0: '↑', 1: '↓', 2: '←', 3: '→'}
@@ -92,6 +107,9 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
 
+
+
+    
     # Value heatmap visualization
     if value_func is not None:
         ax2 = plt.subplot(1, 3, 2)
@@ -114,6 +132,8 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
         cbar = plt.colorbar(im, ax=ax2)
         cbar.set_label('Value')
 
+
+    
     # Performance Summary Panel
     if path is not None:
         ax3 = plt.subplot(1, 3, 3)
@@ -132,6 +152,9 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
         total_reward = 0
         step_costs = total_steps * REWARDS["step"]  # -1 per step
         hazard_penalties = 0
+
+
+
         
         # Sum rewards/penalties for all cells in the path
         for x, y in path:
@@ -159,6 +182,11 @@ def plot_grid(env, path=None, animate=False, value_func=None, policy=None):
         
         # Create performance summary text with detailed reward breakdown
         summary_text = f"""
+
+
+
+
+        
 📊 OVERALL PERFORMANCE
 
 Start Position:
@@ -189,6 +217,9 @@ Mission Status:
         plt.show()
         return None
 
+
+
+    
     # 🎬 Animation with improved visuals
     if animate:
         xdata, ydata = [], []
@@ -211,6 +242,10 @@ Mission Status:
             repeat=False
         )
 
+
+
+
+        
         # 🔥 IMPORTANT (prevents garbage collection)
         plt.tight_layout()
 
@@ -222,6 +257,8 @@ Mission Status:
         ax.plot(xs[-1], ys[-1], 'r*', markersize=20, label='End')
         ax.legend()
         plt.tight_layout()
+
+
     
     # Add restart buttons to all visualizations
     plt.subplots_adjust(bottom=0.15)
